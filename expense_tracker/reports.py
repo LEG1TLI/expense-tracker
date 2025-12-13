@@ -13,6 +13,6 @@ def montly_summary_chart(year_month):
     mdf = df[fd['date'].str.startswith(year_month)]
     g = mdf.groupby('category')['amount'].sum()
 
-    g.plot(kind='bar', title=f"Expense summary for ({year_month})"
-        plt.tight_layout()
-        plt.savefig(f"reports/{year_month}_summary.png")
+    g.plot(kind='bar', title=f"Expense summary for ({year_month})")
+    plt.tight_layout()
+    plt.savefig(f"reports/{year_month}_summary.png")
