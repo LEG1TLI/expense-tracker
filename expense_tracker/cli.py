@@ -12,8 +12,12 @@ def main():
     addp.add_argument("--category", required=True)
     addp.add_argument("--notes", default="")
 
-    sump = sub.add_parser("summary")
-    sump.add_argument("--month", required=True)
+    monthly_summary = sub.add_parser("summary")
+    monthly_summary.add_argument("--month", required=True)
+
+    export_pdf = sub.add_parser("export")
+    export_pdf.add_argument("--month", required = True)
+    export_pdf.add_argument("--format", choices = ["pdf"], default="pdf")
 
     args = parser.parse_args()
 
@@ -23,6 +27,12 @@ def main():
     elif args.cmd == "summary":
         print(f"Summary for {args.month}")
         # TODO: query DB and show totals
+    elif args.cmd == "export":
+        summary = monthly_summary(args.month)
+        if args.format == "pdf":
+            path = export_pdf(summary, args.month)
+            print(f"PDF exported to {path}")
+
 
 if __name__ == "__main__":
     db.init_db()
