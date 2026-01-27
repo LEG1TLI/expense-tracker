@@ -1,6 +1,18 @@
 import argparse
 from datetime import datetime
 from . import db
+from . import reports
+
+def get_monthly_summary(year_month):
+    conn = db.get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT category, SUM(amount) as total FROM expenses WHERE date LIKE ? GROUP BY category",
+        (f"{year_month}%",)
+    )
+    summary = {row[0]: row[1] for row in cur.fetchall()}
+    conn.close()
+    return summary
 
 def main():
     parser = argparse.ArgumentParser(prog="expenses")
@@ -23,14 +35,16 @@ def main():
 
     if args.cmd == "add":
         print(f"Adding expense: {args.amount} in {args.category} on {args.date}")
-        # TODO: insert into DB
+        db.add_expense(args.date, args.amount, args.category, args.notes)
     elif args.cmd == "summary":
         print(f"Summary for {args.month}")
-        # TODO: query DB and show totals
+        summary = get_monthly_summary(args.month)
+        for category, total in summary.items():
+            print(f"{category}: {total}")
     elif args.cmd == "export":
-        summary = monthly_summary(args.month)
+        summary = get_monthly_summary(args.month)
         if args.format == "pdf":
-            path = export_pdf(summary, args.month)
+            path = reports.make_pdf(summary, args.month)
             print(f"PDF exported to {path}")
 
 
