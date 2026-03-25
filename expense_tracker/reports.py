@@ -20,7 +20,7 @@ def build_report(summary, year_month):
     rows = ""
     for category, amount in summary.items():
         rows += f"<tr><td>{category}</td><td>{amount:.2f}</td></tr>"
-    
+    #TODO: Add Stylesheet to the HTML to make for prettier report PDF
     return f"""
     <html>
     <head>
