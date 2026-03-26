@@ -68,6 +68,12 @@ def build_report(summary, year_month):
 def make_pdf(summary, year_month):
     html = build_report(summary, year_month)
     output_path = Path("reports") / f"{year_month}_report.pdf"
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    HTML(string=html).write_pdf(output_path)
+    output_path.parent.mkdir(parents = True, exist_ok = True)
+
+    css = Path(__file__).with_name("report_styles.css")
+
+    HTML(string=html).write_pdf(
+        output_path,
+        stylesheets=[CSS(filename=str(css))]
+    )
     return output_path
