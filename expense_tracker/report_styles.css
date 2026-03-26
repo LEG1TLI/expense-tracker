@@ -1,0 +1,101 @@
+@page {
+    size: A4;
+    margin: 24mm 18mm;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1f2937;
+    background: #f4f6f8;
+}
+
+.page {
+    background: linear-gradient(135deg, #f8fafc 0%, #eef2f7 100%);
+    padding: 24px;
+}
+
+.report-card {
+    background: white;
+    border: 1px solid #dbe3ea;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.header {
+    background: linear-gradient(135deg, #0f4c81 0%, #1d7bb8 100%);
+    color: white;
+    padding: 28px 32px;
+}
+
+.header h1 {
+    margin: 0 0 6px 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.header p {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.content {
+    padding: 28px 32px 32px;
+}
+
+.summary-box {
+    margin-bottom: 24px;
+    padding: 16px 18px;
+    background: #f8fbff;
+    border-left: 5px solid #1d7bb8;
+    border-radius: 10px;
+}
+
+.summary-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    margin-bottom: 6px;
+}
+
+.summary-total {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+th {
+    text-align: left;
+    padding: 14px 16px;
+    background: #eaf2f9;
+    color: #0f3d62;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 1px solid #d3e0ea;
+}
+
+td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #334155;
+}
+
+tbody tr:nth-child(even) {
+    background: #fafbfd;
+}
+
+.amount {
+    text-align: right;
+    font-weight: 600;
+    color: #0f172a;
+}
