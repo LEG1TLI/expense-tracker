@@ -1,7 +1,7 @@
 import pandas as pd 
 import matplotlib.pyplot as plt 
 from .db import get_connection
-from weasyprint import HTML
+from weasyprint import HTML, CSS
 from pathlib import Path
 
 def montly_summary_chart(year_month):
@@ -17,26 +17,50 @@ def montly_summary_chart(year_month):
     plt.savefig(f"reports/{year_month}_summary.png")
 
 def build_report(summary, year_month):
+    total = sum(summary.values())
+
     rows = ""
     for category, amount in summary.items():
-        rows += f"<tr><td>{category}</td><td>{amount:.2f}</td></tr>"
-    #TODO: Add Stylesheet to the HTML to make for prettier report PDF
+        rows += f"""
+        <tr>
+            <td>{category}</td>
+            <td class="amount">${amount:,.2f}</td>
+        </tr>
+        """
+
     return f"""
     <html>
     <head>
-        <style>
-            body {{ font-family: Arial, sans-serif; margin: 20px; }}
-            table {{ border-collapse: collapse; width: 100%; }}
-            th, td {{ border: 1px solid black; padding: 10px; text-align: left; }}
-            th {{ background-color: #f2f2f2; }}
-        </style>
+        <meta charset="utf-8">
     </head>
     <body>
-        <h1>Expense Report for {year_month}</h1>
-        <table>
-            <tr><th>Category</th><th>Amount</th></tr>
-            {rows}
-        </table>
+        <div class="page">
+            <div class="report-card">
+                <div class="header">
+                    <h1>Expense Report</h1>
+                    <p>Monthly summary for {year_month}</p>
+                </div>
+
+                <div class="content">
+                    <div class="summary-box">
+                        <div class="summary-label">Total Expenses</div>
+                        <div class="summary-total">${total:,.2f}</div>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th class="amount">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </body>
     </html>
     """
